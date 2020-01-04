@@ -84,10 +84,7 @@ def goals(goal):
      """
     teachers = get_tutors_data()['teachers']
     teachers = {k: v for k, v in teachers.items() if goal in v['goals']}
-    goals_list = {"travel": {"text": "для путешествий", "icon": "⛱"},
-                  "study": {"text": "для школы", "icon": "🏫"},
-                  "work": {"text": "для работы", "icon": "🏢"},
-                  "relocate": {"text": "для переезда", "icon": "🚜"}}
+    goals_list = get_data('goals.json')
     return render_template("goal.html", teachers=teachers, goal=goals_list[goal])
 
 
@@ -108,7 +105,7 @@ def pick():
         request_data = {"user name": request.form['user_name'],
                         "phone": request.form['phone'],
                         "time": request.form['time'],
-                        "goal": request.form['goal']}
+                        "goal": get_data('goals.json')[request.form['goal']]['text']}   # Подставляем русский текст
         add_tutor_request({request_time: request_data})
         return render_template('pick_confirmed.html', data=request_data)
     return render_template("pick.html")
