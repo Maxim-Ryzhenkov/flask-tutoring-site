@@ -77,18 +77,21 @@ def main():
     return render_template('index.html', teachers=teachers)
 
 
-@app.route('/goals/<goal>')
+@app.route('/goals/<goal>/')
 def goals(goal):
     """ Страница где показываются только репетиторы подходящие под цели обучения
      То есть если у них есть соответствующий тэг.
      """
     teachers = get_tutors_data()['teachers']
     teachers = {k: v for k, v in teachers.items() if goal in v['goals']}
-    goals_list = {"travel": "для путешествий", "study": "для школы", "work": "для работы", "relocate": "для переезда"}
+    goals_list = {"travel": {"text": "для путешествий", "icon": "⛱"},
+                  "study": {"text": "для школы", "icon": "🏫"},
+                  "work": {"text": "для работы", "icon": "🏢"},
+                  "relocate": {"text": "для переезда", "icon": "🚜"}}
     return render_template("goal.html", teachers=teachers, goal=goals_list[goal])
 
 
-@app.route('/profile/<int:id>')
+@app.route('/profile/<int:id>/')
 def profile(id: int):
     """ Страница с индивидуальным профилем преподавателя """
     teachers = get_tutors_data()['teachers']
@@ -97,7 +100,7 @@ def profile(id: int):
     return render_template('profile.html', teacher=teachers[str(id)], teacher_id=str(id))
 
 
-@app.route('/pick', methods=['GET', 'POST'])
+@app.route('/pick/', methods=['GET', 'POST'])
 def pick():
     """ Страница заявки на подбор репетитора """
     if request.method == 'POST':
@@ -111,7 +114,7 @@ def pick():
     return render_template("pick.html")
 
 
-@app.route('/booking/<int:id>', methods=['POST', 'GET'])
+@app.route('/booking/<int:id>/', methods=['POST', 'GET'])
 def booking(id):
     """ Страница формы бронирования занятий с репетитором """
     teachers = get_tutors_data()['teachers']
@@ -134,7 +137,7 @@ def booking(id):
     return render_template('booking.html', teacher=teacher, booking_time=booking_time, booking_day=days[booking_day])
 
 
-@app.route('/message/<int:id>', methods=["GET", "POST"])
+@app.route('/message/<int:id>/', methods=["GET", "POST"])
 def message(id):
     """ Страница формы бронирования занятий с репетитором """
     teachers = get_tutors_data()['teachers']

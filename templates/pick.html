@@ -2,79 +2,90 @@
 
 {% block content %}
 
-     <div class="row mt-5">
-        <div class="col-6 offset-3">
-            <form action="" class="card mb-3" >
+<!-- Класс для выстраивания контента в один ряд-->
 
+<div class="row mt-5">
+    <div class="col-6 offset-3">
 
-                  <div class="card-body text-center pt-5">
-                    <h3 class="card-title mt-4 mb-2">Подбор преподавателя</h3>
-                    <p class="px-5">Напишите, чего вам нужно  и мы подберем отличных ребят</p>
-                  </div>
+        <form action="" class="card mb-3" method="post">
 
-                   <hr/>
+            <!-- Заголовок в виде карточки -->
+            <div class="card-body text-center pt-5">
+                <h3 class="card-title mt-4 mb-2">Подбор преподавателя</h3>
+                <p class="px-5">Напишите, чего вам нужно  и мы подберем отличных ребят</p>
+            </div>
+            <!--Окончание заголовка-->
 
-                   <div class="card-body mx-3">
+            <hr/>
 
-                       <div class="row">
-                           <div class="col">
+            <!--Блок радиокнопок в виде карточки с двумя колонками-->
+            <div class="card-body mx-3">
 
-                               <p>Какая цель занятий?</p>
+                <!--Задаём ряд-->
+                <div class="row">
 
-                               <div class="form-check ">
-                                <input type="radio" class="form-check-input" name="goal" value="travel"> Для путешествий
-                               </div>
-                               <div class="form-check ">
-                                <input type="radio" class="form-check-input" name="goal" value="learn"> Для школы
-                               </div>
-                               <div class="form-check ">
-                                <input type="radio" class="form-check-input" name="goal" value="work"> Для работы
-                               </div>
-                               <div class="form-check ">
-                                <input type="radio" class="form-check-input"name="goal" value="move"> Для переезда
-                               </div>
+                    <!--Блок первой колонки-->
+                    <div class="col">
+                        <p>Какая цель занятий?</p>
 
-                           </div>
+                        <!--Блок радиокнопок-->
+                        <div class="form-check ">
+                            <input type="radio" class="form-check-input" name="goal" value="travel" required> Для путешествий
+                        </div>
+                        <div class="form-check ">
+                            <input type="radio" class="form-check-input" name="goal" value="learn" required> Для школы
+                        </div>
+                        <div class="form-check ">
+                            <input type="radio" class="form-check-input" name="goal" value="work" required> Для работы
+                        </div>
+                        <div class="form-check ">
+                            <input type="radio" class="form-check-input" name="goal" value="move" required> Для переезда
+                        </div>
+                        <!--Окончание блока радиокнопок-->
+                    </div>
+                    <!--Окончание блока первой колонки-->
 
-                           <div class="col">
+                    <!--Блок второй колонки-->
+                    <div class="col">
+                        <p>Сколько времени есть?</p>
 
-                               <p>Сколько времени есть?</p>
+                        <!--Блок радиокнопок-->
+                        <div class="form-check ">
+                            <input type="radio" class="form-check-input" name="time" value="1-2"  required> 1-2 часа в неделю
+                        </div>
+                        <div class="form-check ">
+                            <input type="radio" class="form-check-input" name="time" value="3-5" required> 3-5 часов в неделю
+                        </div>
+                        <div class="form-check ">
+                            <input type="radio" class="form-check-input" name="time" value="5-7" required> 5-7 часов в неделю
+                        </div>
+                        <div class="form-check ">
+                            <input type="radio" class="form-check-input" name="time" value="7-10" required> 7-10 часов в неделю
+                        </div>
+                        <!--Окончание блока радиокнопок-->
+                    </div>
+                    <!--Окончание блока первой колонки-->
+                </div>
+            </div>
+            <!--Закрытие карточки с двумя колонками радиокнопок-->
 
-                               <div class="form-check ">
-                                <input type="radio" class="form-check-input" name="time" value="1-2"> 1-2 часа в неделю
-                               </div>
-                               <div class="form-check ">
-                                <input type="radio"class="form-check-input" name="time" value="3-5"> 3-5 часов в неделю
-                               </div>
-                               <div class="form-check ">
-                                <input type="radio" class="form-check-input"name="time" value="5-7"> 5-7 часов в неделю
-                               </div>
-                               <div class="form-check ">
-                                <input type="radio" class="form-check-input"name="time" value="7-10"> 7-10 часов в неделю
-                               </div>
+            <hr>
 
+            <div class="card-body mx-3">
 
-                           </div>
-                       </div>
-                  </div>
+                <label for="user_name" class="mb-1 mt-2">Вас зовут</label>
+                <input name="user_name" id="user_name" class="form-control" type="text" placeholder="Имя Фамилия" required>
 
-                   <hr>
+                <label for="phone" class="mb-1 mt-2">Ваш телефон</label>
+                <input name="phone" id="phone" class="form-control" type="text" placeholder="+7 (XXX) XXX XXXX" required>
 
-                   <div class="card-body mx-3">
+                <input type="submit" class="btn btn-primary mt-4" value="Найдите мне преподавателя">
 
-                       <p class="mb-1 mt-2">Вас зовут</p>
-                       <input class="form-control" type="text" placeholder="">
+            </div>
 
-                       <p class="mb-1 mt-2">Ваш телефон</p>
-                       <input class="form-control" type="text" placeholder="">
+        </form>
 
-                       <input type="submit" class="btn btn-primary mt-4" value="Найдите мне преподавателя">
-
-                   </div>
-
-                </form>
-
-        </div>
-     </div>
+    </div>
+</div>
 
 {% endblock %}

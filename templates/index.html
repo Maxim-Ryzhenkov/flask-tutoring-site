@@ -6,12 +6,10 @@
 
     <div class="text-center mb-5">
         <div class="btn-group mx-auto mb-0" role="group" aria-label="Basic example">
-          <a type="button" class="btn btn-outline-secondary">
-              <i class="fas fa-umbrella-beach"></i> ⛱Для путешествий
-          </a>
-          <a href="/goals/school" type="button" class="btn btn-outline-secondary">🏫 Для школы</a>
-          <a href="/goals/work" type="button" class="btn btn-outline-secondary">🏢 Для работы</a>
-          <a href="/goals/relocation" type="button" class="btn btn-outline-secondary">🚜 Для переезда</a>
+          <a href="{{ url_for('goals', goal='travel') }}" type="button" class="btn btn-outline-secondary">⛱ Для путешествий</a>
+          <a href="{{ url_for('goals', goal='study') }}" type="button" class="btn btn-outline-secondary">🏫 Для школы</a>
+          <a href="{{ url_for('goals', goal='work') }}" type="button" class="btn btn-outline-secondary">🏢 Для работы</a>
+          <a href="{{ url_for('goals', goal='relocate') }}" type="button" class="btn btn-outline-secondary">🚜 Для переезда</a>
         </div>
     </div>
 
@@ -23,12 +21,12 @@
         <div class="card mb-4 shadow p-3 bg-white rounded">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-3"><img src="../static/pict 1.png" class="img-fluid"></div>
+                    <div class="col-3"><img src="{{ teacher.picture }}" class="img-fluid"></div>
                     <div class="col-9">
                         <p class="float-right">Рейтинг: <b>{{ teacher.rating }}</b> Ставка: <b>{{ teacher.price }} / час</b></p>
                         <h5 class="font-weight-bolder">{{ teacher.name }}</h5>
                         <p class="text-justify">{{ teacher.about }}</p>
-                        <a href="/booking/{{ teacher_id }}" class="btn btn-primary btn-sm mr-3">Записаться на пробный урок</a>
+                        <a href="{{ url_for('profile', id=teacher_id) }}" class="btn btn-primary btn-sm mr-3">Записаться на пробный урок</a>
                         <a href="/message/{{ teacher_id }}" class="btn btn-outline-primary btn-sm">Отправить сообщение</a>
                     </div>
                 </div>

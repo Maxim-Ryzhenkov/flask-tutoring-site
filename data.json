@@ -4,6 +4,7 @@
       "name": "Morris Simmmons",
       "about": "Репетитор американского английского языка. Структурированная система обучения. Всем привет! Я предпочитаю называть себя «тренером» английского языка. Мои занятия похожи на тренировки",
       "rating": 4.8,
+      "picture": "https://i.pravatar.cc/300?img=25",
       "price": 900,
       "goals": [
         "travel",
@@ -14,7 +15,7 @@
         "mon": {
           "8:00": true,
           "10:00": false,
-          "12:00": false,
+          "12:00": true,
           "14:00": false,
           "16:00": false,
           "18:00": false,
@@ -26,7 +27,7 @@
           "10:00": false,
           "12:00": false,
           "14:00": false,
-          "16:00": false,
+          "16:00": true,
           "18:00": false,
           "20:00": false,
           "22:00": false
@@ -87,6 +88,7 @@
       "name": "Lee P",
       "about": "I am a native speaker and conversation tutor, providing private English conversation lessons using something called Life Learning.This method allows students to take complete control of how and what they learn. It is student-led learning focusing on interests, life goals, enjoyment and effective learning for you, as an individual.Stop wasting time with textbooks, tests and unneccesary pressure. Find a love for learning and speaking English with creativity and freedom. The lessons are completely chosen by you to keep you motivated and driven to achieve your goals.",
       "rating": 4.8,
+      "picture": "https://i.pravatar.cc/300?img=26",
       "price": 1200,
       "goals": [
         "relocate",

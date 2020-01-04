@@ -2,38 +2,34 @@
 
 {% block content %}
 
-     <div class="row mt-5">
-        <div class="col-6 offset-3">
-            <form action="" class="card mb-3" >
+<div class="row mt-5">
+    <div class="col-6 offset-3">
+        <form action="" class="card mb-3 shadow" method="post">
 
+            <div class="card-body text-center pt-5">
+                <img src="{{ teacher.picture }}" class="mb-3" width="150" alt="">
+                <h4 class="card-title mt-2 mb-2">{{ teacher.name }}</h4>
+                <p class="my-1">Отправить сообщение</p>
+            </div>
 
-                  <div class="card-body text-center pt-5">
-                    <img src="../static/pict 1.png" class="mb-3" width="95" alt="">
-                    <h5 class="card-title mt-2 mb-2">{{ teacher.name }}</h5>
-                    <p class="my-1">Отправить сообщение</p>
-                  </div>
+            <hr/>
 
+            <div class="card-body mx-3">
+                <label for="user_name" class="mb-1 mt-2">Вас зовут</label>
+                <input name="user_name" id="user_name" class="form-control" type="text" placeholder="Имя Фамилия" required>
 
-                   <hr/>
+                <label for="phone" class="mb-1 mt-2">Ваш телефон</label>
+                <input name="phone" id="phone" class="form-control" type="text" placeholder="+7 (ХХХ) ХХХ ХХХХ" required>
 
-                   <div class="card-body mx-3">
+                <label for="message" class="mb-1 mt-2">Сообщение</label>
+                <input name="message" id="message" class="form-control" type="text" placeholder="Напишите ваше сообщение или вопрос преподавателю" required>
 
-                       <p class="mb-1 mt-2">Вас зовут</p>
-                       <input class="form-control" type="text" placeholder="">
+                <input type="submit" class="btn btn-primary btn-block mt-4" value="Отправить">
+            </div>
 
-                       <p class="mb-1 mt-2">Ваш телефон</p>
-                       <input class="form-control" type="text" placeholder="">
+        </form>
 
-                        <p class="mb-1 mt-2">Сообщение</p>
-                       <input class="form-control" type="text" placeholder="">
-
-                       <input type="submit" class="btn btn-primary btn-block mt-4" value="Записаться на пробный урок">
-
-                   </div>
-
-                </form>
-
-        </div>
-     </div>
+    </div>
+</div>
 
 {% endblock %}
