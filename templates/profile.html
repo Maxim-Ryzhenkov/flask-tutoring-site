@@ -31,12 +31,18 @@
     <div class="card-body  mx-4 mt-1">
 
         <h2 class="mb-5">Записаться на пробный урок</h2>
-
+        {% set days_list = {"mon": "пн.",
+                            "tue": "вт.",
+                            "wed": "ср.",
+                            "thu": "чт.",
+                            "fri": "пт.",
+                            "sat": "сб.",
+                            "sun": "вс."} %}
         <table class="table">
             <tr>
                 <th>#</th>
                 {% for day in teacher.free.keys() %}
-                    <th>{{ day }} </th>
+                    <th>{{ days_list[day] }} </th>
                 {% endfor %}
             </tr>
 
