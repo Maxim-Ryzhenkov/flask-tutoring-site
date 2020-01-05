@@ -119,7 +119,7 @@ def booking(id):
         return render_template('page404.html')
     teacher = teachers[str(id)]
     booking_day = request.args.get("d")
-    booking_time = request.args.get("h")
+    booking_hour = request.args.get("h")
     days = {"mon": "понедельник", "tue": "вторник", "wed": "среда", "thu": "четверг", "fri": "пятница", "sat": "суббота", "sun": "воскресенье"}
 
     if request.method == 'POST':
@@ -127,11 +127,11 @@ def booking(id):
         booking_data = {"user name": request.form['user_name'],
                         "phone": request.form['phone_number'],
                         "day": days[booking_day],
-                        "time": booking_time,
+                        "time": booking_hour,
                         "tutor": {"id": id, "name": teacher['name']}}
         add_booking({booking_time: booking_data})
         return render_template('booking_confirmed.html', booking_data=booking_data)
-    return render_template('booking.html', teacher=teacher, booking_time=booking_time, booking_day=days[booking_day])
+    return render_template('booking.html', teacher=teacher, booking_hour=booking_hour, booking_day=days[booking_day])
 
 
 @app.route('/message/<int:id>/', methods=["GET", "POST"])
