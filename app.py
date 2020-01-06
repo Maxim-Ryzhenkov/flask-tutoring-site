@@ -2,6 +2,7 @@ import os
 import time
 import json
 import logging
+import random
 from flask import Flask, render_template, request, redirect, url_for
 
 logging.basicConfig(level=logging.DEBUG)
@@ -70,11 +71,21 @@ def get_tutors_data():
     return get_data(tutors_json)
 
 
+def get_random_items(items: dict, quantity=None):
+    quantity = quantity if (quantity and quantity < len(items)) else len(items)
+    keys = random.sample(items.keys(), quantity)
+    filtered_items: dict = {}
+    for key in keys:
+        filtered_items.update({key: items[key]})
+    return filtered_items
+
+
 @app.route('/')
 def main():
     """ Главная страница сайта """
     teachers = get_tutors_data()['teachers']
-    return render_template('index.html', teachers=teachers)
+    filtered_teachers = get_random_items(teachers, 6)
+    return render_template('index.html', teachers=filtered_teachers)
 
 
 @app.route('/goals/<goal>/')
