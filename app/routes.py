@@ -1,0 +1,157 @@
+# -*- coding: utf-8 -*-
+import os
+import time
+import json
+import random
+
+from flask import flash, render_template, request, redirect, url_for
+
+from app import app, db
+
+
+def get_data(file_name: str):
+    """ Прочитать данные из указанного файла json и вернуть их как словарь
+    Args:
+        file_name: полный путь к файлу .json
+    Returns:
+        data: dict - содержимое json файла в виде словаря
+    """
+    if not os.path.exists(file_name):
+        raise OSError(f"Файл не найден: {file_name}")
+    with open(file_name, 'r', encoding='utf8') as json_file:
+        data = json.load(json_file)
+    return data
+
+
+def put_data(file_name: str, data: dict):
+    """ Записать данные в файл json. !!! Файл будет перезаписан!
+    Args:
+        file_name: полный путь к файлу .json
+        data: слдоварь для записи в json
+    """
+    with open(file_name, 'w', encoding='utf8') as json_file:
+        json.dump(data, json_file, indent=2, ensure_ascii=False)
+
+
+def add_booking(booking_data: dict):
+    """ Добавить новую запись о бронировании в файле booking.json
+        - Если файл не существует, он будет создан и в него будет добавлен ключ "bookings: {}"
+        - Если файл уже есть, то он будет прочитан в словарь.
+        - Новая запись будет добавлена в словарь
+        - После этого словарь будет записан обратно в файл booking.json.
+    """
+    booking_json = os.path.abspath(os.path.join(app.config['ROOT_DIR'], 'booking.json'))
+    if not os.path.exists(booking_json):
+        put_data(booking_json, {'bookings': {}})
+    data = get_data(booking_json)
+    data['bookings'].update(booking_data)
+    put_data(booking_json, data)
+
+
+def add_tutor_request(request_data: dict):
+    """ Добавить новую запись о заявке на подбор репетитора в файле request_tutor.json
+        - Если файл не существует, он будет создан и в него будет добавлен ключ "requests: {}"
+        - Если файл уже есть, то он будет прочитан в словарь.
+        - Новая запись будет добавлена в словарь
+        - После этого словарь будет записан обратно в файл request_tutor.json.
+    """
+    request_tutor_json = os.path.abspath(os.path.join(app.ba, 'request_tutor.json'))
+    if not os.path.exists(request_tutor_json):
+        put_data(request_tutor_json, {'requests': {}})
+    data = get_data(request_tutor_json)
+    data['requests'].update(request_data)
+    put_data(request_tutor_json, data)
+
+
+def get_tutors_data():
+    """ Прочитать данные о репетиторах из файла data.json и вернуть как словарь """
+    tutors_json = os.path.abspath(os.path.join(app.config['ROOT_DIR'], 'data.json'))
+    return get_data(tutors_json)
+
+
+def get_random_items(items: dict, quantity=None):
+    quantity = quantity if (quantity and quantity < len(items)) else len(items)
+    keys = random.sample(items.keys(), quantity)
+    filtered_items: dict = {}
+    for key in keys:
+        filtered_items.update({key: items[key]})
+    return filtered_items
+
+
+@app.route('/')
+@app.route('/index/')
+def main():
+    """ Главная страница сайта """
+    teachers = get_tutors_data()['teachers']
+    filtered_teachers = get_random_items(teachers, 6)
+    print(filtered_teachers)
+    return render_template('index.html', teachers=filtered_teachers)
+
+
+@app.route('/goals/<goal>/')
+def goals(goal):
+    """ Страница где показываются только репетиторы подходящие под цели обучения
+     То есть если у них есть соответствующий тэг.
+     """
+    teachers = get_tutors_data()['teachers']
+    teachers = {k: v for k, v in teachers.items() if goal in v['goals']}
+    goals_list = get_data('goals.json')
+    return render_template("goal.html", teachers=teachers, goal=goals_list[goal])
+
+
+@app.route('/profile/<int:id>/')
+def profile(id: int):
+    """ Страница с индивидуальным профилем преподавателя """
+    teachers = get_tutors_data()['teachers']
+    if str(id) not in teachers.keys():
+        return render_template('404.html')
+    return render_template('profile.html', teacher=teachers[str(id)], teacher_id=str(id))
+
+
+@app.route('/pick/', methods=['GET', 'POST'])
+def pick():
+    """ Страница заявки на подбор репетитора """
+    if request.method == 'POST':
+        request_time = time.strftime(app_time_format)
+        request_data = {"user name": request.form['user_name'],
+                        "phone": request.form['phone'],
+                        "time": request.form['time'],
+                        "goal": get_data('goals.json')[request.form['goal']]['text']}   # Подставляем русский текст
+        add_tutor_request({request_time: request_data})
+        return render_template('pick_confirmed.html', data=request_data)
+    return render_template("pick.html")
+
+
+@app.route('/booking/<int:id>/', methods=['POST', 'GET'])
+def booking(id):
+    """ Страница формы бронирования занятий с репетитором """
+    teachers = get_tutors_data()['teachers']
+    if str(id) not in teachers.keys():
+        return render_template('404.html')
+    teacher = teachers[str(id)]
+    booking_day = request.args.get("d")
+    booking_hour = request.args.get("h")
+    days = {"mon": "понедельник", "tue": "вторник", "wed": "среда", "thu": "четверг", "fri": "пятница", "sat": "суббота", "sun": "воскресенье"}
+
+    if request.method == 'POST':
+        booking_time = time.strftime(app_time_format)
+        booking_data = {"user name": request.form['user_name'],
+                        "phone": request.form['phone_number'],
+                        "day": days[booking_day],
+                        "time": booking_hour,
+                        "tutor": {"id": id, "name": teacher['name']}}
+        add_booking({booking_time: booking_data})
+        return render_template('booking_confirmed.html', booking_data=booking_data)
+    return render_template('booking.html', teacher=teacher, booking_hour=booking_hour, booking_day=days[booking_day])
+
+
+@app.route('/message/<int:id>/', methods=["GET", "POST"])
+def message(id):
+    """ Страница формы бронирования занятий с репетитором """
+    teachers = get_tutors_data()['teachers']
+    if str(id) not in teachers.keys():
+        return render_template('404.html')
+    if request.method == "POST":
+        return render_template('message_confirmed.html')
+    return render_template('message.html', teacher=teachers[str(id)])
+

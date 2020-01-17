@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row mt-5">
+   <div class="col-6 offset-3">
+       <form action="" class="card mb-3" method="POST">
+
+           <div class="card-body text-center pt-5">
+               <img src="{{ teacher.picture }}" class="mb-3" width="95" alt="">
+               <h5 class="card-title mt-2 mb-2 font-weight-bolder">{{ teacher.name }}</h5>
+               <p class="my-1">Запись на пробный урок</p>
+               <p class="my-1">{{ booking_day }}, {{ booking_hour }}</p>
+           </div>
+
+               <hr/>
+
+           <div class="card-body mx-3">
+               <label for="user_name" class="mb-1 mt-2">Вас зовут</label>
+               <input name="user_name" id="user_name" class="form-control" type="text" placeholder="Имя Фамилия" required>
+
+               <label for="phone_number" class="mb-1 mt-2">Ваш телефон</label>
+               <input name="phone_number" id="phone_number" class="form-control" type="text" placeholder="+7 (ХХХ) ХХХ-ХХХХ" required>
+
+               <input type="submit" class="btn btn-primary btn-block mt-4" value="Записаться на пробный урок">
+           </div>
+
+       </form>
+
+   </div>
+</div>
+
+{% endblock %}
