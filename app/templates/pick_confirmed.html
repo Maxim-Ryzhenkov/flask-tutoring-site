@@ -11,7 +11,7 @@
 
             <div class="card-body text-center pt-5">
                 <img src="../static/check.png" class="mb-3" width="65" alt="">
-                <h3 class="card-title mt-4 mb-2">{{ data['user name'] }}, спасибо за вашу заявку!</h3>
+                <h3 class="card-title mt-4 mb-2">{{ new_pick.student_name }}, спасибо за вашу заявку!</h3>
                 <p>Скоро мы вам перезвоним</p>
             </div>
 
@@ -19,10 +19,10 @@
 
             <div class="card-body mx-5">
                 <p><b>Подбор преподавателя:</b></p>
-                <p><b>Основная цель занятий:</b> {{ data.goal }} </p>
-                <p><b>Часов в неделю:</b> {{ data.time }} </p>
-                <p><b>Ученик:</b> {{ data['user name'] }} </p>
-                <p><b>Телефон:</b> {{ data.phone }} </p>
+                <p><b>Основная цель занятий:</b> {{ goal.text_ru }} </p>
+                <p><b>Часов в неделю:</b> {{ new_pick.hours }} </p>
+                <p><b>Ученик:</b> {{ new_pick.student_name }} </p>
+                <p><b>Телефон:</b> {{ new_pick.student_phone }} </p>
             </div>
 
         </div>

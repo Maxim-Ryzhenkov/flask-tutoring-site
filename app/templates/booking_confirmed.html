@@ -4,9 +4,9 @@
 
     <!-- HERO -->
 
-     <div class="row mt-5">
+     <div class="row my-5">
         <div class="col-6 offset-3">
-            <div class="card mb-3" >
+            <div class="card my-4 shadow" >
 
 
                   <div class="card-body text-center pt-5">
@@ -18,10 +18,10 @@
                    <hr/>
 
                    <div class="card-body mx-5">
-                       <p><b>Тема:</b> Пробный урок с преподавателем - {{ booking_data.tutor.name }}</p>
-                     <p><b>Дата:</b> Вторник, 12:00</p>
-                     <p><b>Имя:</b> {{ booking_data['user name'] }} </p>
-                     <p><b>Телефон:</b> {{ booking_data.phone }} </p>
+                       <p><b>Тема:</b> Пробный урок с преподавателем - {{ booking.tutor.name }}</p>
+                     <p><b>Дата:</b> {{ booking.date_time }}</p>
+                     <p><b>Ученик:</b> {{ booking.student_name }} </p>
+                     <p><b>Телефон:</b> {{ booking.student_phone }} </p>
                   </div>
 
 

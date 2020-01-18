@@ -8,21 +8,20 @@
         <div class="row">
 
             <div class="col-5" align="center">
-                <img src="{{ teacher.picture }}" class="img-fluid">
+                <img src="{{ tutor.avatar }}" class="img-fluid">
             </div>
 
             <div class="col-7">
-                <h3 class="font-weight-bolder">{{ teacher.name }}</h3>
+                <h3 class="font-weight-bolder">{{ tutor.name }}</h3>
                 <p>
-                    {% for goal in teacher.goals %}
-                    <span class="badge badge-warning mr-2">for {{ goal }}</span>
+                    {% for goal in tutor.goals %}
+                    <span class="badge badge-warning mr-2">{{ goal.text_ru }}</span>
                     {% endfor %}
-                    Рейтинг: ☺️<b>{{ teacher.rating }}</b> Ставка: <b>{{ teacher.price }} / час</b>
+                    Рейтинг: ☺️<b>{{ tutor.rating }}</b> Ставка: <b>{{ tutor.price }} / час</b>
                 </p>
-                <p class="text-justify">{{ teacher.about }}</p><br><br>
-                <a href="{{ url_for('message', id=teacher_id) }}" class="btn btn-outline-secondary btn-sm ">Отправить сообщение</a>
+                <p class="text-justify">{{ tutor.about }}</p><br><br>
+                <a href="{{ url_for('message', id=tutor.id) }}" class="btn btn-outline-secondary btn-sm ">Отправить сообщение</a>
             </div>
-
         </div>
     </div>
 
@@ -38,6 +37,7 @@
                             "fri": "пт.",
                             "sat": "сб.",
                             "sun": "вс."} %}
+
         <table class="table">
             <tr>
                 <th>#</th>

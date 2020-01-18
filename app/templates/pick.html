@@ -29,18 +29,12 @@
                         <p>Какая цель занятий?</p>
 
                         <!--Блок радиокнопок-->
+                        {% for goal in goals %}
                         <div class="form-check ">
-                            <input type="radio" class="form-check-input" name="goal" value="travel" required> Для путешествий
+                            <input type="radio" class="form-check-input" name="goal" value="{{ goal.text_en }}" required>
+                                {{ goal.text_ru }}
                         </div>
-                        <div class="form-check ">
-                            <input type="radio" class="form-check-input" name="goal" value="learn" required> Для школы
-                        </div>
-                        <div class="form-check ">
-                            <input type="radio" class="form-check-input" name="goal" value="work" required> Для работы
-                        </div>
-                        <div class="form-check ">
-                            <input type="radio" class="form-check-input" name="goal" value="move" required> Для переезда
-                        </div>
+                        {% endfor %}
                         <!--Окончание блока радиокнопок-->
                     </div>
                     <!--Окончание блока первой колонки-->
