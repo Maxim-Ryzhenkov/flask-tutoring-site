@@ -17,15 +17,17 @@ class Tutor(db.Model):
     price = db.Column(db.Integer)
     goals = db.relationship('Goal', secondary=tutors_goals)
     bookings = db.relationship('Booking', back_populates='tutor')
+    timetable = db.Column(db.String(1000))
 
-    def __init__(self, name, about, rating, price):
+    def __init__(self, name, about, rating, price, timetable):
         self.name = name
         self.about = about
         self.rating = rating
         self.price = price
+        self.timetable = timetable
 
     def __repr__(self):
-        return '<Tutor {}>'.format(self.name)
+        return f'<Tutor id {self.id} - {self.name}>'
 
     @property
     def avatar(self):
@@ -46,9 +48,8 @@ class Tutor(db.Model):
 class Goal(db.Model):
     __tablename__ = "goals"
     id = db.Column(db.Integer, primary_key=True)
-    text_en = db.Column(db.String(30), index=True, unique=True)
-    text_ru = db.Column(db.String(30), index=True, unique=True)
-    icon = db.Column(db.LargeBinary, index=True)
+    text_en = db.Column(db.String(30), unique=True)
+    text_ru = db.Column(db.String(30), unique=True)
     tutors = db.relationship('Tutor', secondary=tutors_goals)
 
     def __init__(self, text_ru, text_en):
