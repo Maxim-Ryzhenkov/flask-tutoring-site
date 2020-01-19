@@ -9,7 +9,6 @@ from flask import flash, render_template, request, redirect, url_for
 from app.models import Tutor, Goal, Pick, Booking
 
 from app import app, db
-import utility_scripts
 
 
 @app.route('/')
@@ -32,9 +31,9 @@ def goals(goal):
 @app.route('/profile/<int:id>/')
 def profile(id: int):
     """ Страница с индивидуальным профилем преподавателя """
-    teachers = utility_scripts.get_tutors_data()['teachers']
     tutor = db.session.query(Tutor).filter(Tutor.id == id).first_or_404()
-    return render_template('profile.html', tutor=tutor, teacher=teachers[str(id)], teacher_id=str(id))
+    schedule = json.loads(tutor.timetable)
+    return render_template('profile.html', tutor=tutor, schedule=schedule)
 
 
 @app.route('/pick/', methods=['GET', 'POST'])

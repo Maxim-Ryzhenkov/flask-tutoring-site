@@ -1,9 +1,8 @@
 import os
 import json
-from datetime import datetime
 
 from config import Config
-from app import app, db
+from app import db
 from app.models import Tutor, Booking, Goal, Pick
 
 
@@ -46,9 +45,9 @@ def transfer_goals_from_json_to_db():
     goals_data = get_tutors_data()['goals']
     for text_en, text_ru in goals_data.items():
         new_goal = Goal(text_en=text_en, text_ru=text_ru)
-        print(new_goal)
         db.session.add(new_goal)
     db.session.commit()
+    print_db_table(Goal)
 
 
 def transfer_tutors_from_json_to_db():
@@ -66,12 +65,13 @@ def transfer_tutors_from_json_to_db():
             new_tutor.goals.append(goal)
         db.session.add(new_tutor)
     db.session.commit()
-
+    print_db_table(Tutor)
 
 def print_db_table(model):
     """ напечатать все зхаписи в таблице с указанной моделью данных"""
     for record in db.session.query(model).all():
         print(record)
+    print(f'Всего записей: {db.session.query(model).count()}')
 
 
 def clear_db_table(model):
@@ -79,7 +79,7 @@ def clear_db_table(model):
     for record in db.session.query(model).all():
         db.session.delete(record)
     db.session.commit()
-
+    print_db_table(model)
 
 # Для обновления базы предварительно надо удалить файл app.db и папку migrations
 # Затем активировать venv и набрать в терминале
@@ -88,20 +88,9 @@ def clear_db_table(model):
 # 3. flask db upgrade
 
 # Затем раскомментировать и запустить. После запуска снова закомментировать
-transfer_goals_from_json_to_db()
+#transfer_goals_from_json_to_db()
 #transfer_tutors_from_json_to_db()
 
 # Убедиться что данные перенеслись корректно можно посмотрев вывод на печать
 # вместо model надо передать Tutor, Goal, Pick или Booking
-# clear_db_table(Pick)
-# print_db_table(Pick)
-
-#
-# tutors_data = get_tutors_data()['teachers']
-# for tutor_id, tutor_info in tutors_data.items():
-#     tutor = db.session.query(Tutor).get(int(tutor_id))
-#     tutor.timetable = json.dumps(tutor_info['free'])
-#     db.session.add(tutor)
-# # db.session.commit()
-# item = db.session.query(Goal).get(1)
-# print(item.text_ru)
+#print_db_table(Pick)

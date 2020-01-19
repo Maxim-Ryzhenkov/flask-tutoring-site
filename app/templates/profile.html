@@ -41,19 +41,19 @@
         <table class="table">
             <tr>
                 <th>#</th>
-                {% for day in teacher.free.keys() %}
+                {% for day in schedule.keys() %}
                     <th>{{ days_list[day] }} </th>
                 {% endfor %}
             </tr>
 
             <!--Цикл по списку часов-->
-            {% for hour in teacher.free.mon.keys() %}
+            {% for hour in schedule.mon.keys() %}
             <tr>
                 <td><span class="btn">{{ hour }}</span></td>
-                {% for day in teacher.free.keys() %}
+                {% for day in schedule.keys() %}
                     <td>
-                        {% if teacher.free[day][hour] %}
-                            <a href="{{ url_for('booking', id=teacher_id, d=day, h=hour) }}" class="btn btn-sm btn-success">{{ hour }}</a>
+                        {% if schedule[day][hour] %}
+                            <a href="{{ url_for('booking', id=tutor.id, d=day, h=hour) }}" class="btn btn-sm btn-success">{{ hour }}</a>
                         {% else %}
                             <button class="btn btn-sm btn-secondary" disabled>{{ hour }}</button>
                         {% endif %}
