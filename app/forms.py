@@ -1,13 +1,19 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, RadioField, SubmitField
+from wtforms import StringField, RadioField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length
-from app.models import Goal
 
 
 class BookingForm(FlaskForm):
     student_name = StringField('Вас зовут', validators=[DataRequired(), Length(min=2, max=32)])
     phone_number = StringField('Телефон для связи', validators=[DataRequired(), Length(min=8, max=16)])
     submit = SubmitField('Записаться на пробный урок')
+
+
+class MessageForm(FlaskForm):
+    sender_name = StringField('Вас зовут', validators=[DataRequired(), Length(min=2, max=32)])
+    sender_phone = StringField('Телефон для связи', validators=[DataRequired(), Length(min=8, max=16)])
+    text = TextAreaField('Ваше сообщение', validators=[DataRequired(), Length(min=0, max=500)])
+    submit = SubmitField('Отправить')
 
 
 class PickForm(FlaskForm):

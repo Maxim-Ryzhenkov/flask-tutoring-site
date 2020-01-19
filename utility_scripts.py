@@ -3,7 +3,7 @@ import json
 
 from config import Config
 from app import db
-from app.models import Tutor, Booking, Goal, Pick
+from app.models import Tutor, Booking, Goal, Pick, Message
 
 
 def get_data(file_name: str):
@@ -93,4 +93,4 @@ def clear_db_table(model):
 
 # Убедиться что данные перенеслись корректно можно посмотрев вывод на печать
 # вместо model надо передать Tutor, Goal, Pick или Booking
-print_db_table(Pick)
+#print_db_table(Pick)

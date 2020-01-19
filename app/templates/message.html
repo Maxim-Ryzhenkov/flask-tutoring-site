@@ -4,31 +4,28 @@
 
 <div class="row mt-5">
     <div class="col-6 offset-3">
-        <form action="" class="card mb-3 shadow" method="post">
 
-            <div class="card-body text-center pt-5">
-                <img src="{{ tutor.avatar }}" class="mb-3" width="150" alt="">
-                <h4 class="card-title mt-2 mb-2">{{ tutor.name }}</h4>
-                <p class="my-1">Отправить сообщение</p>
-            </div>
+        <div class="card-body shadow text-center pt-5">
+            <img src="{{ tutor.avatar }}" class="mb-3" width="150" alt="">
+            <h4 class="card-title mt-2 mb-2">{{ tutor.name }}</h4>
+            <p class="my-1">Отправить сообщение</p>
 
-            <hr/>
-
-            <div class="card-body mx-3">
-                <label for="user_name" class="mb-1 mt-2">Вас зовут</label>
-                <input name="user_name" id="user_name" class="form-control" type="text" placeholder="Имя Фамилия" required>
-
-                <label for="phone" class="mb-1 mt-2">Ваш телефон</label>
-                <input name="phone" id="phone" class="form-control" type="text" placeholder="+7 (ХХХ) ХХХ ХХХХ" required>
-
-                <label for="message" class="mb-1 mt-2">Сообщение</label>
-                <input name="message" id="message" class="form-control" type="text" placeholder="Напишите ваше сообщение или вопрос преподавателю" required>
-
-                <input type="submit" class="btn btn-primary btn-block mt-4" value="Отправить">
-            </div>
-
-        </form>
-
+            <form action="" class="card p-4 my-5 text-left" method="POST">
+                <div class="form-group">
+                    {{ form.sender_name.label }}
+                    {{ form.sender_name(class="form-control", placeholder="Фамилия Имя Отчество") }}
+                </div>
+                <div class="form-group">
+                    {{ form.sender_phone.label }}
+                    {{ form.sender_phone(class="form-control", type="tel", placeholder="+7 (XXX) XXX XXXX") }}
+                </div>
+                <div class="form-group">
+                    {{ form.text.label }}
+                    {{ form.text(class="form-control", type="text", placeholder="Скажите что-нибудь...") }}
+                </div>
+                    {{ form.submit(class="btn btn-primary btn-block") }}
+            </form>
+        </div>
     </div>
 </div>
 

@@ -6,8 +6,8 @@ from datetime import datetime
 
 from flask import render_template, request, url_for
 from app import app, db
-from app.forms import BookingForm, PickForm
-from app.models import Tutor, Goal, Pick, Booking
+from app.forms import BookingForm, PickForm, MessageForm
+from app.models import Tutor, Goal, Pick, Booking, Message
 
 
 @app.route('/')
@@ -75,7 +75,14 @@ def booking(id):
 @app.route('/message/<int:id>/', methods=["GET", "POST"])
 def message(id):
     """ Страница формы бронирования занятий с репетитором """
+    form = MessageForm()
     tutor = Tutor.query.get_or_404(id)
+
     if request.method == "POST":
+        new_message = Message(sender_name=form.sender_name.data,
+                          sender_phone=form.sender_phone.data,
+                          text=form.text.data, addressee_id=tutor.id)
+        db.session.add(new_message)
+        db.session.commit()
         return render_template('message_confirmed.html')
-    return render_template('message.html', tutor=tutor)
+    return render_template('message.html', tutor=tutor, form=form)

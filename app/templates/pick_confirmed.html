@@ -10,7 +10,7 @@
 
 
             <div class="card-body text-center pt-5">
-                <img src="../static/check.png" class="mb-3" width="65" alt="">
+                <img src="{{ url_for('static', filename='check.png') }}" class="mb-3" width="65" alt="">
                 <h3 class="card-title mt-4 mb-2">{{ new_pick.student_name }}, спасибо за вашу заявку!</h3>
                 <p>Скоро мы вам перезвоним</p>
             </div>

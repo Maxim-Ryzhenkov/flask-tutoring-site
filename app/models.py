@@ -11,12 +11,13 @@ tutors_goals = db.Table('tutors_goals',
 class Tutor(db.Model):
     __tablename__ = "tutors"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), index=True, unique=True)
+    name = db.Column(db.String(64), unique=True)
     about = db.Column(db.String(500))
     rating = db.Column(db.Float)
     price = db.Column(db.Integer)
     goals = db.relationship('Goal', secondary=tutors_goals)
     bookings = db.relationship('Booking', back_populates='tutor')
+    messages = db.relationship('Message', back_populates='addressee')
     timetable = db.Column(db.String(1000))
 
     def __init__(self, name, about, rating, price, timetable):
@@ -113,10 +114,10 @@ class Pick(db.Model):
     __tablename__ = 'picks'
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    student_name = db.Column(db.String(64), unique=False)
-    student_phone = db.Column(db.String(25), unique=False)
-    goal = db.Column(db.String(25), unique=False)
-    hours = db.Column(db.String(5))
+    student_name = db.Column(db.String(64), nullable=False)
+    student_phone = db.Column(db.String(25), nullable=False)
+    goal = db.Column(db.String(25), nullable=False)
+    hours = db.Column(db.String(5), nullable=False)
     closed = db.Column(db.Boolean, default=False)
 
     def __init__(self, student_name, student_phone, goal, hours):
@@ -130,7 +131,34 @@ class Pick(db.Model):
                f'"{self.student_name}", goal: "{self.goal}", hours: {self.hours}>'
 
     def is_closed(self):
+        return self.closed
+
+
+class Message(db.Model):
+    __tablename__ = 'messages'
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    sender_name = db.Column(db.String(64), nullable=False)
+    sender_phone = db.Column(db.String(25), nullable=False)
+    text = db.Column(db.Text, nullable=False)
+    read = db.Column(db.Boolean, default=False)
+    addressee_id = db.Column(db.Integer, db.ForeignKey('tutors.id'))
+    addressee = db.relationship("Tutor", back_populates="messages")
+
+    def __init__(self, sender_name, sender_phone, text, addressee_id):
+        self.sender_name = sender_name
+        self.sender_phone = sender_phone
+        self.text = text
+        self.addressee_id = addressee_id
+
+    def __repr__(self):
+        return f'<От {self.sender_name} к {self.addressee.name}: \n {self.text}'
+
+    def mark_as_read(self):
         pass
 
-    def close(self):
+    def mark_as_not_read(self):
+        pass
+
+    def delete(self):
         pass
