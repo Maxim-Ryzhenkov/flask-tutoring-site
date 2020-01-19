@@ -2,8 +2,6 @@
 
 {% block content %}
 
-<!-- Класс для выстраивания контента в один ряд-->
-
 <div class="row mt-5">
     <div class="col-6 offset-3">
 
@@ -21,60 +19,44 @@
             <!--Блок радиокнопок в виде карточки с двумя колонками-->
             <div class="card-body mx-3">
 
-                <!--Задаём ряд-->
                 <div class="row">
 
-                    <!--Блок первой колонки-->
                     <div class="col">
-                        <p>Какая цель занятий?</p>
-
                         <!--Блок радиокнопок-->
-                        {% for goal in goals %}
-                        <div class="form-check ">
-                            <input type="radio" class="form-check-input" name="goal" value="{{ goal.text_en }}" required>
-                                {{ goal.text_ru }}
-                        </div>
-                        {% endfor %}
-                        <!--Окончание блока радиокнопок-->
+                        <div class="form-check">
+                            <p>{{ form.goal.label }}</p>
+                            {% for subfield in form.goal %}
+                                {{ subfield(class="form-check-input", type="radio") }}
+                                {{ subfield.label(class="form-check-label") }}<br>
+                            {% endfor %}
+                         </div>
                     </div>
-                    <!--Окончание блока первой колонки-->
 
-                    <!--Блок второй колонки-->
                     <div class="col">
-                        <p>Сколько времени есть?</p>
-
                         <!--Блок радиокнопок-->
-                        <div class="form-check ">
-                            <input type="radio" class="form-check-input" name="time" value="1-2"  required> 1-2 часа в неделю
+                        <div class="form-check">
+                            <p>{{ form.time_available.label }}</p>
+                            {% for subfield in form.time_available %}
+                                {{ subfield(class="form-check-input", type="radio") }}
+                                {{ subfield.label(class="form-check-label") }}<br>
+                            {% endfor %}
                         </div>
-                        <div class="form-check ">
-                            <input type="radio" class="form-check-input" name="time" value="3-5" required> 3-5 часов в неделю
-                        </div>
-                        <div class="form-check ">
-                            <input type="radio" class="form-check-input" name="time" value="5-7" required> 5-7 часов в неделю
-                        </div>
-                        <div class="form-check ">
-                            <input type="radio" class="form-check-input" name="time" value="7-10" required> 7-10 часов в неделю
-                        </div>
-                        <!--Окончание блока радиокнопок-->
                     </div>
-                    <!--Окончание блока первой колонки-->
                 </div>
-            </div>
             <!--Закрытие карточки с двумя колонками радиокнопок-->
 
             <hr>
 
-            <div class="card-body mx-3">
-
-                <label for="user_name" class="mb-1 mt-2">Вас зовут</label>
-                <input name="user_name" id="user_name" class="form-control" type="text" placeholder="Имя Фамилия" required>
-
-                <label for="phone" class="mb-1 mt-2">Ваш телефон</label>
-                <input name="phone" id="phone" class="form-control" type="text" placeholder="+7 (XXX) XXX XXXX" required>
-
-                <input type="submit" class="btn btn-primary mt-4" value="Найдите мне преподавателя">
-
+            <div class="card-body mx-2">
+                  <div class="form-group">
+                      {{ form.student_name.label }}
+                      {{ form.student_name(class="form-control", placeholder="Фамилия Имя Отчество") }}
+                  </div>
+                  <div class="form-group">
+                      {{ form.phone_number.label }}
+                      {{ form.phone_number(class="form-control", type="tel", placeholder="+7 (XXX) XXX XXXX") }}
+                  </div>
+                       {{ form.submit(class="btn btn-primary") }}
             </div>
 
         </form>

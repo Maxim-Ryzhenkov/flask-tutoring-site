@@ -112,12 +112,12 @@ class Booking(db.Model):
 class Pick(db.Model):
     __tablename__ = 'picks'
     id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    student_name = db.Column(db.String(64), index=True, unique=False)
-    student_phone = db.Column(db.String(25), index=True, unique=False)
-    goal = db.Column(db.String(25), index=True, unique=False)
-    hours = db.Column(db.Integer, index=True)
-    closed = db.Column(db.Boolean, index=True, default=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    student_name = db.Column(db.String(64), unique=False)
+    student_phone = db.Column(db.String(25), unique=False)
+    goal = db.Column(db.String(25), unique=False)
+    hours = db.Column(db.String(5))
+    closed = db.Column(db.Boolean, default=False)
 
     def __init__(self, student_name, student_phone, goal, hours):
         self.student_name = student_name

@@ -93,4 +93,4 @@ def clear_db_table(model):
 
 # Убедиться что данные перенеслись корректно можно посмотрев вывод на печать
 # вместо model надо передать Tutor, Goal, Pick или Booking
-#print_db_table(Pick)
+print_db_table(Pick)
